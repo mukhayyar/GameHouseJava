@@ -11,4 +11,11 @@
         <maven.compiler.target>20</maven.compiler.target>
         <exec.mainClass>com.kelompok_tiga.gamehouse.GameHouse</exec.mainClass>
     </properties>
+    <build>
+    <resources>
+        <resource>
+            <directory>src/main/java</directory>
+        </resource>
+     </resources>
+</build>
 </project>
