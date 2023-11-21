@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
+
     private ArrayList<String> pengguna = new ArrayList<>();
 
     public Login() {
-        pengguna.add("zamzam");
-        pengguna.add("akbar");
-        pengguna.add("jemjem");
-        initComponents();
+        Home beranda = new Home("tsaqif");
+        beranda.setVisible(true);
+        this.dispose();
+//        pengguna.add("zamzam");
+//        pengguna.add("akbar");
+//        pengguna.add("jemjem");
+//        initComponents();
     }
 
     @SuppressWarnings("unchecked")
@@ -66,22 +70,22 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        
+
         String nama = txt_user.getText();
         if (pengguna.contains(nama)) {
             Home beranda = new Home(nama);
             beranda.setVisible(true);
             this.dispose();
         } else {
-           
-              JOptionPane.showMessageDialog(this,"Nama user " + nama + " tidak boleh bermain" , "", JOptionPane.ERROR_MESSAGE);                
+
+            JOptionPane.showMessageDialog(this, "Nama user " + nama + " tidak boleh bermain", "", JOptionPane.ERROR_MESSAGE);
         }
-    
-  
+
+
     }//GEN-LAST:event_btn_loginActionPerformed
 
     public static void main(String args[]) {
- 
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);

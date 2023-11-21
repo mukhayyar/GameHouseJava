@@ -35,6 +35,7 @@ tic_tac_toe_game\TicTacToeDualPlayer$6.class
 blueprint\Game.class
 snake_game\Login.class
 tic_tac_toe_game\TicTacToeDualPlayer$11.class
+blueprint\Score.class
 view\HomeView.class
 view\PlayView.class
 view\HowView$1.class
@@ -49,4 +50,3 @@ suit_game\frmMain$7.class
 tic_tac_toe_game\TicTacToeVsAI.class
 snake_game\Food.class
 view\HomeView$2.class
-snake_game\Home$2.class

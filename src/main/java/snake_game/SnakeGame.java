@@ -1,14 +1,14 @@
- package snake_game;
+package snake_game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
+
     private int lebarPapan;
     private int tinggiPapan;
     private String nama;
-    
 
     private Snake ular;
     private Food makanan;
@@ -39,6 +39,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // Draw checkerboard pattern
+        for (int row = 0; row < tinggiPapan / 20; row++) {
+            for (int col = 0; col < lebarPapan / 20; col++) {
+                int rgb = (row + col) % 2 == 0 ? 0x9AF533 : 0x55F47D;
+                Color squareColor = new Color(rgb);
+                g.setColor(squareColor);
+                g.fillRect(col * 20, row * 20, 20, 20);
+            }
+        }
+
+        makanan.gambar(g);
+        ular.gambar(g);
         gambar(g);
     }
 
@@ -94,7 +106,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
             g.drawString(pesanJeda, xPesan, yPesan);
         } else {
-            g.setColor(Color.GREEN);
+            g.setColor(Color.BLACK);
             g.drawString("Skor: " + ular.getPanjangTubuh(), 10, 20);
         }
     }
@@ -113,7 +125,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 ular.reset();
                 makanan.randomPosisi();
                 main.setDelay(150);
-                
+
             }
         });
         add(btnRestart);
@@ -141,16 +153,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             if (ular.tertabrakDenganMakanan(makanan)) {
                 ular.makanMakanan();
                 makanan.randomPosisi();
-                 
+
                 if (ular.getPanjangTubuh() % 5 == 0) {
-                    
                     int currentDelay = main.getDelay();
-                    if (currentDelay > 10) { // Pastikan interval timer tidak menjadi negatif
-                        main.setDelay(currentDelay - 10); 
+                    if (currentDelay > 10) { // Make sure interval timer doesn't become negative
+                        main.setDelay(currentDelay - 10);
                     }
                 }
             }
-            if (ular.tertabrakDenganBatasPapan(lebarPapan, tinggiPapan) || ular.tertabrakDenganDirinyaSendiri()) {
+            if (ular.tertabrakDenganBatasPapan(lebarPapan, tinggiPapan) || 
+                    ular.tertabrakDenganDirinyaSendiri()) {
                 gameover = true;
             }
         }
@@ -160,7 +172,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         pergerakan();
         repaint();
-        
+
     }
 
     @Override
@@ -175,7 +187,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 ular.setArah(Snake.Arah.KIRI);
             } else if (tombol == KeyEvent.VK_D && ular.getArah() != Snake.Arah.KIRI) {
                 ular.setArah(Snake.Arah.KANAN);
-            }if (tombol == KeyEvent.VK_UP && ular.getArah() != Snake.Arah.BAWAH) {
+            }
+            if (tombol == KeyEvent.VK_UP && ular.getArah() != Snake.Arah.BAWAH) {
                 ular.setArah(Snake.Arah.ATAS);
             } else if (tombol == KeyEvent.VK_DOWN && ular.getArah() != Snake.Arah.ATAS) {
                 ular.setArah(Snake.Arah.BAWAH);
@@ -191,13 +204,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-      
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-      
+
     }
 
-    
 }
