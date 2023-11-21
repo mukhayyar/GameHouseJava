@@ -1,4 +1,4 @@
-package View;
+package ViewUtama;
 
 import GameHouse.FrameNavigator;
 
@@ -26,13 +26,14 @@ public class HomeView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(960, 720));
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblJudul.setFont(new java.awt.Font("Showcard Gothic", 1, 48)); // NOI18N
+        lblJudul.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblJudul.setText("GAME HOUSE");
-        getContentPane().add(lblJudul);
-        lblJudul.setBounds(327, 100, 310, 90);
+        getContentPane().add(lblJudul, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 100, 950, 90));
 
+        btnPlay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnPlay1.png"))); // NOI18N
         btnPlay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -45,9 +46,9 @@ public class HomeView extends javax.swing.JFrame {
                 btnPlayMouseExited(evt);
             }
         });
-        getContentPane().add(btnPlay);
-        btnPlay.setBounds(407, 250, 146, 60);
+        getContentPane().add(btnPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 250, 950, 60));
 
+        btnStats.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnStats.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnStats1.png"))); // NOI18N
         btnStats.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -60,9 +61,9 @@ public class HomeView extends javax.swing.JFrame {
                 btnStatsMouseExited(evt);
             }
         });
-        getContentPane().add(btnStats);
-        btnStats.setBounds(398, 320, 163, 60);
+        getContentPane().add(btnStats, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 320, 960, 60));
 
+        btnHow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnHow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnHow1.png"))); // NOI18N
         btnHow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -75,12 +76,10 @@ public class HomeView extends javax.swing.JFrame {
                 btnHowMouseExited(evt);
             }
         });
-        getContentPane().add(btnHow);
-        btnHow.setBounds(356, 390, 250, 60);
+        getContentPane().add(btnHow, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 390, 950, 60));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Home.png"))); // NOI18N
-        getContentPane().add(lblBackground);
-        lblBackground.setBounds(0, 0, 960, 720);
+        getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -110,7 +109,7 @@ public class HomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHowMouseExited
 
     private void btnPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlayMouseClicked
-        FrameNavigator.switchToFrame(this, new PlayView());
+        FrameNavigator.switchToFrame(this, new ListGameView());
     }//GEN-LAST:event_btnPlayMouseClicked
 
     private void btnStatsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatsMouseClicked

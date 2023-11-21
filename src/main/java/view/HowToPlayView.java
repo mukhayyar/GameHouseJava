@@ -4,17 +4,39 @@
  */
 package View;
 
+import GameHouse.FrameNavigator;
 /**
  *
  * @author ASUS
  */
-public class PlayView extends BaseView {
+public class HowToPlayView extends BaseView {
 
     /**
-     * Creates new form PlayView
+     * Creates new form Stats
      */
-    public PlayView() {
+    public HowToPlayView() {
         initComponents();
+        lblJudul.setText("HOW TO PLAY");
+        btnSnake.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSnakeMouseClicked(evt);
+            }
+        });
+        
+        btnSuit.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSuitMouseClicked(evt);
+            }
+        });
+        
+        btnTicTacToe.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTicTacToeMouseClicked(evt);
+            }
+        });
     }
 
     /**
@@ -27,6 +49,7 @@ public class PlayView extends BaseView {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(960, 720));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -42,6 +65,18 @@ public class PlayView extends BaseView {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSnakeMouseClicked(java.awt.event.MouseEvent evt) {                                   
+        FrameNavigator.switchToFrame(this, new Snake_htp());
+    }  
+    
+    private void btnSuitMouseClicked(java.awt.event.MouseEvent evt) {                                   
+        FrameNavigator.switchToFrame(this, new Suit_htp());
+    }  
+    
+    private void btnTicTacToeMouseClicked(java.awt.event.MouseEvent evt) {                                   
+        FrameNavigator.switchToFrame(this, new Tictactoe_htp());
+    }  
+    
     /**
      * @param args the command line arguments
      */
@@ -59,21 +94,27 @@ public class PlayView extends BaseView {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PlayView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HowToPlayView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PlayView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HowToPlayView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PlayView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HowToPlayView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PlayView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HowToPlayView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PlayView().setVisible(true);
+                new HowToPlayView().setVisible(true);
             }
         });
     }
