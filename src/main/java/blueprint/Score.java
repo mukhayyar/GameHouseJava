@@ -9,7 +9,5 @@ package Blueprint;
  * @author user
  */
 public interface Score {
-    void add();
-    void remove();
-    void sum();
+    void add(String status, int score);
 }

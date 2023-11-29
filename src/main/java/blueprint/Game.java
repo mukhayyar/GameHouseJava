@@ -9,5 +9,5 @@ package Blueprint;
  * @author user
  */
 public interface Game {
-    void play();
+    void play(String pilih);
 }

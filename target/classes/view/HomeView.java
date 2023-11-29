@@ -1,6 +1,6 @@
-package view;
+package View;
 
-import module.FrameNavigator;
+import GameHouse.FrameNavigator;
 
 public class HomeView extends javax.swing.JFrame {
 
@@ -31,7 +31,7 @@ public class HomeView extends javax.swing.JFrame {
         lblJudul.setFont(new java.awt.Font("Showcard Gothic", 1, 48)); // NOI18N
         lblJudul.setText("GAME HOUSE");
         getContentPane().add(lblJudul);
-        lblJudul.setBounds(327, 100, 311, 90);
+        lblJudul.setBounds(327, 100, 310, 90);
 
         btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnPlay1.png"))); // NOI18N
         btnPlay.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,7 +118,7 @@ public class HomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStatsMouseClicked
 
     private void btnHowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHowMouseClicked
-        FrameNavigator.switchToFrame(this, new HowView());
+        FrameNavigator.switchToFrame(this, new HowToPlayView());
     }//GEN-LAST:event_btnHowMouseClicked
 
     /**
