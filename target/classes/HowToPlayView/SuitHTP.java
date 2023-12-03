@@ -13,24 +13,15 @@ import ViewUtama.HowToPlayView;
  * @author bayu
  */
 public class SuitHTP extends BackButton {
-    private Player player;
 
     /**
      * Creates new form suit_htp
+     * @param player
      */
     public SuitHTP(Player player) {
         initComponents();
-        this.player = player;
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
-    }
-    
-    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new HowToPlayView(player));
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new HowToPlayView(player)));
     }
 
     /**

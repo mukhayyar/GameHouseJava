@@ -1,6 +1,6 @@
 package SuitGame;
 
-import Blueprint.BoardGame;
+import Blueprint.GameResultChecker;
 import Blueprint.Score;
 import java.util.Random;
 import javax.swing.JFrame;
@@ -10,9 +10,9 @@ import GameHouse.Player;
 import ViewUtama.BackButton;
 import ViewUtama.ListGameView;
 
-public class SuitGame_View extends BackButton implements BoardGame, Score {
+public class SuitGame_View extends BackButton implements GameResultChecker, Score {
 
-    private Player player;
+    private final Player player;
     JFrame frame;
     boolean status = false;
 
@@ -54,12 +54,10 @@ public class SuitGame_View extends BackButton implements BoardGame, Score {
         int currentLose = player.getLoseSuit();
         int currentDraw = player.getDrawSuit();
 
-        if (status.equals("WIN")) {
-            player.setWinSuit(currentWin + score);
-        } else if (status.equals("LOSE")) {
-            player.setLoseSuit(currentLose + score);
-        } else {
-            player.setDrawSuit(currentDraw + score);
+        switch (status) {
+            case "WIN" -> player.setWinSuit(currentWin + score);
+            case "LOSE" -> player.setLoseSuit(currentLose + score);
+            default -> player.setDrawSuit(currentDraw + score);
         }
     }
 
@@ -273,8 +271,7 @@ public class SuitGame_View extends BackButton implements BoardGame, Score {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    @Override
-    public void resetBoard() {
+    private void initPosition() {
         b1.setBounds(130, 60, b1.getWidth(), b1.getHeight());
         g1.setBounds(130, 160, g1.getWidth(), g1.getHeight());
         k1.setBounds(130, 260, k1.getWidth(), k1.getHeight());
@@ -285,8 +282,8 @@ public class SuitGame_View extends BackButton implements BoardGame, Score {
         status = false;
     }
 
-    public void resetBoard(String ket) {
-        resetBoard();
+    private void resetPoin(String ket) {
+        initPosition();
         if (ket.equals("ALL")) {
             txtC1.setText("");
             txtC2.setText("");
@@ -308,37 +305,41 @@ public class SuitGame_View extends BackButton implements BoardGame, Score {
         }
     }
 
-    public int random() {
-        int nilai = 0;
+    private int random() {
+        int nilai;
         Random acak = new Random();
         int n = 3;
         nilai = acak.nextInt(n + 1);
         return nilai;
     }
 
-    public void fight(SUIT suit) {
-        int nilaiAcak = 0;
+    private void fight(SUIT suit) {
+        int nilaiAcak;
         nilaiAcak = random();
-        if (nilaiAcak == 1) {
-            b2.setBounds(490, 169, b2.getWidth(), b2.getHeight());
-            if (suit == SUIT.KERTAS) {
-                cekWin('1');
-            } else if (suit == SUIT.GUNTING) {
-                cekWin('0');
+        switch (nilaiAcak) {
+            case 1 -> {
+                b2.setBounds(490, 169, b2.getWidth(), b2.getHeight());
+                if (suit == SUIT.KERTAS) {
+                    cekWin('1');
+                } else if (suit == SUIT.GUNTING) {
+                    cekWin('0');
+                }
             }
-        } else if (nilaiAcak == 2) {
-            g2.setBounds(490, 160, g2.getWidth(), g2.getHeight());
-            if (suit == SUIT.BATU) {
-                cekWin('1');
-            } else if (suit == SUIT.KERTAS) {
-                cekWin('0');
+            case 2 -> {
+                g2.setBounds(490, 160, g2.getWidth(), g2.getHeight());
+                if (suit == SUIT.BATU) {
+                    cekWin('1');
+                } else if (suit == SUIT.KERTAS) {
+                    cekWin('0');
+                }
             }
-        } else {
-            k2.setBounds(490, 160, k2.getWidth(), k2.getHeight());
-            if (suit == SUIT.GUNTING) {
-                cekWin('1');
-            } else if (suit == SUIT.BATU) {
-                cekWin('0');
+            default -> {
+                k2.setBounds(490, 160, k2.getWidth(), k2.getHeight());
+                if (suit == SUIT.GUNTING) {
+                    cekWin('1');
+                } else if (suit == SUIT.BATU) {
+                    cekWin('0');
+                }
             }
         }
     }
@@ -385,7 +386,7 @@ public class SuitGame_View extends BackButton implements BoardGame, Score {
                     JOptionPane.showMessageDialog(frame, "Permainan Seri");
                     add("DRAW", 1);
                 }
-                resetBoard("ALL");
+                resetPoin("ALL");
             }
         } else {
             if (txtY1.getText().equals("")) {
@@ -426,13 +427,13 @@ public class SuitGame_View extends BackButton implements BoardGame, Score {
                     JOptionPane.showMessageDialog(frame, "Permainan Seri");
                     add("DRAW", 1);
                 }
-                resetBoard("ALL");
+                resetPoin("ALL");
             }
         }
     }
 
     private void btnLanjutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLanjutMouseClicked
-        resetBoard("");
+        resetPoin("");
     }//GEN-LAST:event_btnLanjutMouseClicked
 
     private void btnLanjutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLanjutMouseEntered
@@ -444,7 +445,7 @@ public class SuitGame_View extends BackButton implements BoardGame, Score {
     }//GEN-LAST:event_btnLanjutMouseExited
 
     private void btnUlangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUlangMouseClicked
-        resetBoard("ALL");
+        resetPoin("ALL");
     }//GEN-LAST:event_btnUlangMouseClicked
 
     private void btnUlangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUlangMouseEntered

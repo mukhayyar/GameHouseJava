@@ -5,38 +5,74 @@
 package TicTacToeView;
 
 import Blueprint.BoardGame;
+import Blueprint.GameResultChecker;
 import Blueprint.Score;
 import GameHouse.FrameNavigator;
 import GameHouse.Player;
-import ViewUtama.BackButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Rifqi
  */
-public class TicTacToeDualPlayer extends BaseTicTacToe implements BoardGame, Score {
+public class TicTacToeDualPlayer extends BaseTicTacToe implements BoardGame, GameResultChecker, Score {
 
-    private Player player;
-    int nilai, nilaiX, nilaiO;
+    int nilai;
 
     /**
      * Creates new form TicTacToeFrame
+     * @param player
      */
     public TicTacToeDualPlayer(Player player) {
+        super(player);
         initComponents();
         setTitleAndInfo("Dual Player", "Player 2: O");
-        this.player = player;
+        buttons = new JButton[][]{{btn1, btn2, btn3}, {btn4, btn5, btn6}, {btn7, btn8, btn9}};
         nilai = 1;
-        nilaiX = 0;
-        nilaiO = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                buttons[i][j].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
+                buttons[i][j].addActionListener((ActionEvent e) -> {
+                    JButton button = (JButton) e.getSource();
+                    int row = -1, col = -1;
+                    // Temukan tombol yang diklik dalam array tombol
+                    for (int i1 = 0; i1 < 3; i1++) {
+                        for (int j1 = 0; j1 < 3; j1++) {
+                            if (buttons[i1][j1] == button) {
+                                row = i1;
+                                col = j1;
+                                break;
+                            }
+                        }
+                    }
+                    performMove(row, col);
+                });
+
+            }
+        }
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new MainTicTacToe(player)));
     }
 
-    @Override
-    protected void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new MainTicTacToe(player));
+    private void performMove(int row, int col) {
+        if (nilai == 1) {
+            buttons[row][col].setText("X");
+            buttons[row][col].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
+            buttons[row][col].setEnabled(false);
+            nilai -= 1;
+            cekWin('X');
+        } else {
+            buttons[row][col].setText("O");
+            buttons[row][col].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
+            buttons[row][col].setEnabled(false);
+            nilai += 1;
+            cekWin('O');
+        }
     }
+
 
     @Override
     public void add(String status, int score) {
@@ -54,75 +90,45 @@ public class TicTacToeDualPlayer extends BaseTicTacToe implements BoardGame, Sco
         }
     }
 
-    @Override
-    public void cekWin(char winner) {
-        if (btn1.getText() == "X" && btn2.getText() == "X" && btn3.getText() == "X") {
-            JOptionPane.showMessageDialog(rootPane, "X win !!");
-            add("WIN", 1);
-            resetBoard();
-        } else if (btn4.getText() == "X" && btn5.getText() == "X" && btn6.getText() == "X") {
-            JOptionPane.showMessageDialog(rootPane, "X win !!");
-            add("WIN", 1);
-            resetBoard();
-        } else if (btn7.getText() == "X" && btn8.getText() == "X" && btn9.getText() == "X") {
-            JOptionPane.showMessageDialog(rootPane, "X win !!");
-            add("WIN", 1);
-            resetBoard();
-        } else if (btn1.getText() == "X" && btn5.getText() == "X" && btn9.getText() == "X") {
-            JOptionPane.showMessageDialog(rootPane, "X win !!");
-            add("WIN", 1);
-            resetBoard();
-        } else if (btn3.getText() == "X" && btn5.getText() == "X" && btn7.getText() == "X") {
-            JOptionPane.showMessageDialog(rootPane, "X win !!");
-            add("WIN", 1);
-            resetBoard();
-        } else if (btn1.getText() == "X" && btn4.getText() == "X" && btn7.getText() == "X") {
-            JOptionPane.showMessageDialog(rootPane, "X win !!");
-            add("WIN", 1);
-            resetBoard();
-        } else if (btn2.getText() == "X" && btn5.getText() == "X" && btn8.getText() == "X") {
-            JOptionPane.showMessageDialog(rootPane, "X win !!");
-            add("WIN", 1);
-            resetBoard();
-        } else if (btn3.getText() == "X" && btn6.getText() == "X" && btn9.getText() == "X") {
-            JOptionPane.showMessageDialog(rootPane, "X win !!");
-            add("WIN", 1);
-            resetBoard();
+    private boolean isGameOver(char player) {
+        for (int i = 0; i < 3; i++) {
+            if ((buttons[i][0].getText().equals(String.valueOf(player))
+                    && buttons[i][1].getText().equals(String.valueOf(player))
+                    && buttons[i][2].getText().equals(String.valueOf(player)))
+                    || (buttons[0][i].getText().equals(String.valueOf(player))
+                    && buttons[1][i].getText().equals(String.valueOf(player))
+                    && buttons[2][i].getText().equals(String.valueOf(player)))) {
+                return true;
+            }
         }
 
-        if (btn1.getText() == "O" && btn2.getText() == "O" && btn3.getText() == "O") {
-            JOptionPane.showMessageDialog(rootPane, "O win !!");
-            add("LOSE", 1);
+        // Pengecekan diagonal
+        if ((buttons[0][0].getText().equals(String.valueOf(player))
+                && buttons[1][1].getText().equals(String.valueOf(player))
+                && buttons[2][2].getText().equals(String.valueOf(player)))
+                || (buttons[0][2].getText().equals(String.valueOf(player))
+                && buttons[1][1].getText().equals(String.valueOf(player))
+                && buttons[2][0].getText().equals(String.valueOf(player)))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void cekWin(char winner) {
+        if (isGameOver(winner) && winner == 'X') {
+            JOptionPane.showMessageDialog(rootPane, "X win !!");
+            add("WIN", 1);
             resetBoard();
-        } else if (btn4.getText() == "O" && btn5.getText() == "O" && btn6.getText() == "O") {
-            JOptionPane.showMessageDialog(rootPane, "O win !!");
-            add("LOSE", 1);
-            resetBoard();
-        } else if (btn7.getText() == "O" && btn8.getText() == "O" && btn9.getText() == "O") {
-            JOptionPane.showMessageDialog(rootPane, "O win !!");
-            add("LOSE", 1);
-            resetBoard();
-        } else if (btn1.getText() == "O" && btn5.getText() == "O" && btn9.getText() == "O") {
-            JOptionPane.showMessageDialog(rootPane, "O win !!");
-            add("LOSE", 1);
-            resetBoard();
-        } else if (btn3.getText() == "O" && btn5.getText() == "O" && btn7.getText() == "O") {
-            JOptionPane.showMessageDialog(rootPane, "O win !!");
-            add("LOSE", 1);
-            resetBoard();
-        } else if (btn1.getText() == "O" && btn4.getText() == "O" && btn7.getText() == "O") {
-            JOptionPane.showMessageDialog(rootPane, "O win !!");
-            add("LOSE", 1);
-            resetBoard();
-        } else if (btn2.getText() == "O" && btn5.getText() == "O" && btn8.getText() == "O") {
-            JOptionPane.showMessageDialog(rootPane, "O win !!");
-            add("LOSE", 1);
-            resetBoard();
-        } else if (btn3.getText() == "O" && btn6.getText() == "O" && btn9.getText() == "O") {
+        }
+        if (isGameOver(winner) && winner == 'O') {
             JOptionPane.showMessageDialog(rootPane, "O win !!");
             add("LOSE", 1);
             resetBoard();
         }
+        System.out.println(isGameOver(winner) + " - " + winner);
+
         cekDraw();
     }
 
@@ -138,29 +144,19 @@ public class TicTacToeDualPlayer extends BaseTicTacToe implements BoardGame, Sco
     }
 
     @Override
+    public void initializeBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                buttons[i][j].setText("");
+                buttons[i][j].setEnabled(true);
+            }
+        }
+    }
+
+    @Override
     public void resetBoard() {
         nilai = 1;
-        nilaiX = 0;
-        nilaiO = 0;
-
-        btn1.setText("");
-        btn1.setEnabled(true);
-        btn2.setText("");
-        btn2.setEnabled(true);
-        btn3.setText("");
-        btn3.setEnabled(true);
-        btn4.setText("");
-        btn4.setEnabled(true);
-        btn5.setText("");
-        btn5.setEnabled(true);
-        btn6.setText("");
-        btn6.setEnabled(true);
-        btn7.setText("");
-        btn7.setEnabled(true);
-        btn8.setText("");
-        btn8.setEnabled(true);
-        btn9.setText("");
-        btn9.setEnabled(true);
+        initializeBoard();
     }
 
     /**
@@ -190,243 +186,10 @@ public class TicTacToeDualPlayer extends BaseTicTacToe implements BoardGame, Sco
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    @Override
-    protected void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        if (nilai == 1) {
-            btn2.setText("X");
-            btn2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn2.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn2.setText("O");
-            btn2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn2.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }//GEN-LAST:event_btn2ActionPerformed
-
-    @Override
-    protected void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        if (nilai == 1) {
-            btn3.setText("X");
-            btn3.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn3.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn3.setText("O");
-            btn3.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn3.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }//GEN-LAST:event_btn3ActionPerformed
-
-    @Override
-    protected void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        if (nilai == 1) {
-            btn4.setText("X");
-            btn4.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn4.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn4.setText("O");
-            btn4.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn4.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }//GEN-LAST:event_btn4ActionPerformed
-
-    @Override
-    protected void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        if (nilai == 1) {
-            btn6.setText("X");
-            btn6.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn6.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn6.setText("O");
-            btn6.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn6.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }//GEN-LAST:event_btn6ActionPerformed
-
-    @Override
-    protected void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        if (nilai == 1) {
-            btn7.setText("X");
-            btn7.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn7.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn7.setText("O");
-            btn7.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn7.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }//GEN-LAST:event_btn7ActionPerformed
-
-    @Override
-    protected void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        if (nilai == 1) {
-            btn8.setText("X");
-            btn8.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn8.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn8.setText("O");
-            btn8.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn8.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }//GEN-LAST:event_btn8ActionPerformed
-
-    @Override
-    protected void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        if (nilai == 1) {
-            btn9.setText("X");
-            btn9.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn9.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn9.setText("O");
-            btn9.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn9.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }//GEN-LAST:event_btn9ActionPerformed
-
-    @Override
-    protected void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        if (nilai == 1) {
-            btn1.setText("X");
-            btn1.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn1.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn1.setText("O");
-            btn1.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn1.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }//GEN-LAST:event_btn1ActionPerformed
-
-    @Override
-    protected void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        if (nilai == 1) {
-            btn5.setText("X");
-            btn5.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn5.setEnabled(false);
-            nilai -= 1;
-            nilaiX += 1;
-
-            cekWin('x');
-        } else {
-            btn5.setText("O");
-            btn5.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-            btn5.setEnabled(false);
-            nilai += 1;
-            nilaiO += 1;
-
-            cekWin('x');
-        }
-    }
-
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TicTacToeDualPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TicTacToeDualPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TicTacToeDualPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TicTacToeDualPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TicTacToeDualPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TicTacToeDualPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TicTacToeDualPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TicTacToeDualPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TicTacToeDualPlayer(new Player("bagas")).setVisible(true);

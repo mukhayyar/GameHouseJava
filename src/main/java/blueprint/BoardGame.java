@@ -9,7 +9,6 @@ package Blueprint;
  * @author user
  */
 public interface BoardGame {
-    void cekDraw();
-    void cekWin(char winner);
+    void initializeBoard();
     void resetBoard();
 }

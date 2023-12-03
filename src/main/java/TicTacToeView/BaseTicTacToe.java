@@ -4,11 +4,9 @@
  */
 package TicTacToeView;
 
-import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import ViewUtama.BackButton;
-import java.awt.Font;
-import javax.swing.JOptionPane;
+import javax.swing.JButton;
 
 
 /**
@@ -20,22 +18,17 @@ public class BaseTicTacToe extends BackButton  {
     /**
      * Creates new form TicTacToeFrame
      */
-    public BaseTicTacToe() {
+    protected JButton[][] buttons = null;
+    Player player;
+
+    public BaseTicTacToe(Player player) {
         initComponents();
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
+        this.player = player;
     }      
     
     protected void setTitleAndInfo(String title, String info){
         lblTitle.setText(title);
         lblInfo.setText(info);
-    }
-    protected void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        //FrameNavigator.switchToFrame(this, new MainTicTacToe(player));
     }
 
 
@@ -66,68 +59,14 @@ public class BaseTicTacToe extends BackButton  {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 126, 113));
-
-        btn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn2ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, 123, 113));
-
-        btn3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn3ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 123, 110));
-
-        btn4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn4ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, 126, 113));
-
-        btn5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn5ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 340, 123, 113));
-
-        btn6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn6ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, 123, 110));
-
-        btn7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn7ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, 126, 113));
-
-        btn8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn8ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 470, 123, 113));
-
-        btn9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn9ActionPerformed(evt);
-            }
-        });
         getContentPane().add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 470, 123, 110));
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 48)); // NOI18N
@@ -158,42 +97,6 @@ public class BaseTicTacToe extends BackButton  {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    protected void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-            
-    }//GEN-LAST:event_btn2ActionPerformed
-
-    protected void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        
-    }//GEN-LAST:event_btn3ActionPerformed
-
-    protected void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        
-    }//GEN-LAST:event_btn4ActionPerformed
-
-    protected void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        
-    }//GEN-LAST:event_btn6ActionPerformed
-
-    protected void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        
-    }//GEN-LAST:event_btn7ActionPerformed
-
-    protected void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        
-    }//GEN-LAST:event_btn8ActionPerformed
-
-    protected void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        
-    }//GEN-LAST:event_btn9ActionPerformed
-
-    protected void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        
-    }//GEN-LAST:event_btn1ActionPerformed
-
-    protected void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        
-    }//GEN-LAST:event_btn5ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -4,24 +4,19 @@ import Blueprint.Game;
 import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import ViewUtama.BackButton;
-import ViewUtama.HomeView;
 import ViewUtama.ListGameView;
 import javax.swing.JFrame;
 
 public class Home extends BackButton implements Game {
-    private Player player;
-    private String nama;
+    private final Player player;
+    private final String nama;
     public Home(Player player) {
         this.player = player;
         this.nama = player.getName();
         initComponents();
         label_welcome.setText("Selamat Datang "+ nama);
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new ListGameView(player)));
     }
 
     @Override
@@ -94,22 +89,6 @@ public class Home extends BackButton implements Game {
     private void btnPlayMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPlayMouseExited
         btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnPlay1.png")));
     }//GEN-LAST:event_btnPlayMouseExited
-
-    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new ListGameView(player));
-    }
-    
-    private void simpanFunction()
-    {
-        this.dispose();
-        JFrame frame = new JFrame("Snake Game");
-        SnakeGame game = new SnakeGame(600, 600,nama,player);
-        frame.add(game);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

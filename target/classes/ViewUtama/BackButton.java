@@ -56,6 +56,14 @@ public class BackButton extends javax.swing.JFrame {
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/btnBack2.png")));
     }//GEN-LAST:event_btnBackMouseExited
 
+    protected void addClickListener(javax.swing.JLabel button, Runnable action) {
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                action.run();
+            }
+        });
+    }
     /**
      * @param args the command line arguments
      */

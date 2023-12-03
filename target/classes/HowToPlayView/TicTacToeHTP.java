@@ -10,26 +10,16 @@ import ViewUtama.HowToPlayView;
  * @author bayu
  */
 public class TicTacToeHTP extends BackButton {
-    private Player player;
 
     /**
      * Creates new form tictactoe_htp
+     * @param player
      */
     public TicTacToeHTP(Player player) {
         initComponents();
-        this.player = player;
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new HowToPlayView(player)));
     }
-    
-    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new HowToPlayView(player));
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

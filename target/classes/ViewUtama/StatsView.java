@@ -20,17 +20,7 @@ public class StatsView extends BackButton {
      */
     public StatsView() {
         initComponents();
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
-    }
-
-    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        HomeView frame = new HomeView(player);
-        FrameNavigator.switchToFrame(this, frame);
+        addClickListener(btnBack, () -> FrameNavigator.switchToFrame(this, new HomeView(player)));
     }
 
     public void setPlayer(Player player) {
@@ -91,28 +81,31 @@ public class StatsView extends BackButton {
 
         lblTictactoe.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         lblTictactoe.setForeground(new java.awt.Color(255, 255, 255));
-        lblTictactoe.setText("CHART TIC TAC TOE");
+        lblTictactoe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTictactoe.setText("TIC TAC TOE");
 
         lblSnake.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         lblSnake.setForeground(new java.awt.Color(255, 255, 255));
-        lblSnake.setText("CHART SNAKE");
+        lblSnake.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSnake.setText("SNAKE");
 
         lblSuit.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         lblSuit.setForeground(new java.awt.Color(255, 255, 255));
-        lblSuit.setText("CHART SUIT");
+        lblSuit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSuit.setText("SUIT");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(76, 76, 76)
                 .addComponent(lblSnake)
-                .addGap(219, 219, 219)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
                 .addComponent(lblSuit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                .addGap(251, 251, 251)
                 .addComponent(lblTictactoe)
-                .addGap(29, 29, 29))
+                .addGap(54, 54, 54))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

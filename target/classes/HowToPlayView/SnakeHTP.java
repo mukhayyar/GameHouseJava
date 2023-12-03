@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package HowToPlayView;
+
 import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import ViewUtama.BackButton;
-import ViewUtama.HomeView;
 import ViewUtama.HowToPlayView;
 
 /**
@@ -14,23 +14,16 @@ import ViewUtama.HowToPlayView;
  * @author bayu
  */
 public class SnakeHTP extends BackButton {
-    private Player player;
+
+
     /**
      * Creates new form snake
+     * @param player
      */
     public SnakeHTP(Player player) {
         initComponents();
-        this.player = player;
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
-    }
-    
-    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new HowToPlayView(player));
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new HowToPlayView(player)));
     }
 
     /**

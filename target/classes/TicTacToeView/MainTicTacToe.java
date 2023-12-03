@@ -8,7 +8,6 @@ import Blueprint.Game;
 import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import ViewUtama.BackButton;
-import ViewUtama.HomeView;
 import ViewUtama.ListGameView;
 
 /**
@@ -21,21 +20,14 @@ public class MainTicTacToe extends BackButton implements Game {
 
     /**
      * Creates new form MainTicTacToe
+     * @param player
      */
     public MainTicTacToe(Player player) {
         initComponents();
         this.player = player;
         setLocationRelativeTo(null);
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
-    }
-
-    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new ListGameView(player));
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new ListGameView(player)));
     }
 
     @Override

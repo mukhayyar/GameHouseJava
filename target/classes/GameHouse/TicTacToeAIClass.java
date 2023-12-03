@@ -9,8 +9,9 @@ package GameHouse;
  * @author Rifqi
  */
 public class TicTacToeAIClass {
-    private char computerPlayer;
-    private char opponentPlayer;
+
+    private final char computerPlayer;
+    private final char opponentPlayer;
 
     public TicTacToeAIClass(char computerPlayer, char opponentPlayer) {
         this.computerPlayer = computerPlayer;
@@ -19,24 +20,24 @@ public class TicTacToeAIClass {
 
     public int findBestMove(char[][] board, int depth) {
         int bestMove = -1;
-    int bestScore = Integer.MIN_VALUE;
+        int bestScore = Integer.MIN_VALUE;
 
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            if (board[i][j] == ' ') {
-                board[i][j] = computerPlayer;
-                int score = minimax(board, depth + 1, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                board[i][j] = ' '; // Undo move
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == ' ') {
+                    board[i][j] = computerPlayer;
+                    int score = minimax(board, depth + 1, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                    board[i][j] = ' '; // Undo move
 
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestMove = i * 3 + j;
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMove = i * 3 + j;
+                    }
                 }
             }
         }
-    }
 
-    return bestMove;
+        return bestMove;
     }
 
     private int minimax(char[][] board, int depth, boolean isMaximizingPlayer, int alpha, int beta) {
@@ -87,20 +88,18 @@ public class TicTacToeAIClass {
         }
     }
 
-    private int evaluate(char[][] board) {
+    public int evaluate(char[][] board) {
         if (checkWinner(board, computerPlayer)) {
-        return 10; // Jika AI menang, berikan skor 10
+            return 10; // Jika AI menang, berikan skor 10
+        } // Mengecek baris, kolom, dan diagonal untuk kemenangan pemain manusia
+        else if (checkWinner(board, opponentPlayer)) {
+            return -10; // Jika pemain menang, berikan skor -10
+        }
+
+        return 0;
     }
 
-    // Mengecek baris, kolom, dan diagonal untuk kemenangan pemain manusia
-    else if (checkWinner(board, opponentPlayer)) {
-        return -10; // Jika pemain menang, berikan skor -10
-    }
-
-    return 0;
-    }
-
-    private boolean isBoardFull(char[][] board) {
+    public boolean isBoardFull(char[][] board) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == ' ') {
@@ -111,28 +110,22 @@ public class TicTacToeAIClass {
         return true;
     }
 
-    private boolean isEmptyCell(char[][] board, int index) {
-        int row = index / 3;
-        int col = index % 3;
-        return board[row][col] == ' ';
-    }
-
     private boolean checkWinner(char[][] board, char player) {
-    // Pengecekan baris dan kolom
-    for (int i = 0; i < 3; i++) {
-        if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) ||
-            (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
+        // Pengecekan baris dan kolom
+        for (int i = 0; i < 3; i++) {
+            if ((board[i][0] == player && board[i][1] == player && board[i][2] == player)
+                    || (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
+                return true;
+            }
+        }
+
+        // Pengecekan diagonal
+        if ((board[0][0] == player && board[1][1] == player && board[2][2] == player)
+                || (board[0][2] == player && board[1][1] == player && board[2][0] == player)) {
             return true;
         }
-    }
 
-    // Pengecekan diagonal
-    if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
-        (board[0][2] == player && board[1][1] == player && board[2][0] == player)) {
-        return true;
+        return false;
     }
-
-    return false;
-}
 
 }

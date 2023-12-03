@@ -5,13 +5,13 @@
 package TicTacToeView;
 
 import Blueprint.BoardGame;
+import Blueprint.GameResultChecker;
 import Blueprint.Score;
 import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import GameHouse.TicTacToeAIClass;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -19,21 +19,20 @@ import javax.swing.JOptionPane;
  *
  * @author Rifqi
  */
-public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, Score {
+public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, GameResultChecker, Score {
 
-    private Player player;
-    private JButton[][] buttons;
     private char[][] board;
-    private TicTacToeAIClass ai;
+    private final TicTacToeAIClass ai;
     private boolean playerTurn;
 
     /**
      * Creates new form TicTacToeAI
+     * @param player
      */
     public TicTacToeVsAI(Player player) {
+        super(player);
         initComponents();
         setTitleAndInfo("VS AI", "Computer: O");
-        this.player = player;
         buttons = new JButton[][]{{btn1, btn2, btn3}, {btn4, btn5, btn6}, {btn7, btn8, btn9}};
         board = new char[3][3];
         ai = new TicTacToeAIClass('O', 'X'); // AI menggunakan 'O', pemain menggunakan 'X'            
@@ -41,40 +40,35 @@ public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, Score {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
-                buttons[i][j].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JButton button = (JButton) e.getSource();
-                        int row = -1, col = -1;
-
-                        // Temukan tombol yang diklik dalam array tombol
-                        for (int i = 0; i < 3; i++) {
-                            for (int j = 0; j < 3; j++) {
-                                if (buttons[i][j] == button) {
-                                    row = i;
-                                    col = j;
-                                    break;
-                                }
+                buttons[i][j].addActionListener((ActionEvent e) -> {
+                    JButton button = (JButton) e.getSource();
+                    int row = -1, col = -1;
+                    // Temukan tombol yang diklik dalam array tombol
+                    for (int i1 = 0; i1 < 3; i1++) {
+                        for (int j1 = 0; j1 < 3; j1++) {
+                            if (buttons[i1][j1] == button) {
+                                row = i1;
+                                col = j1;
+                                break;
                             }
                         }
-
-                        if (playerTurn && row != -1 && col != -1 && board[row][col] == ' ') {
-                            button.setText("X"); // Atur teks pada tombol yang diklik menjadi "X" (langkah pemain)
-                            button.setEnabled(false); // Nonaktifkan tombol setelah digunakan
-                            board[row][col] = 'X'; // Update 'board' sesuai langkah pemain
-
-                            // Setelah pemain melakukan langkah, giliran AI
-                            playerTurn = false;
-                            if (!isGameOver()) {
-                                performAIMove(); // Lakukan langkah AI setelah pemain
-                            }
-                        }
-
                     }
-
+                    if (playerTurn && row != -1 && col != -1 && board[row][col] == ' ') {
+                        button.setText("X"); // Atur teks pada tombol yang diklik menjadi "X" (langkah pemain)
+                        button.setEnabled(false); // Nonaktifkan tombol setelah digunakan
+                        board[row][col] = 'X'; // Update 'board' sesuai langkah pemain
+                        
+                        // Setelah pemain melakukan langkah, giliran AI
+                        playerTurn = false;
+                        if (!isGameOver()) {
+                            performAIMove(); // Lakukan langkah AI setelah pemain
+                        }
+                    }
                 });
 
             }
+            addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new MainTicTacToe(player)));
         }
 
         playerTurn = true; // Giliran pemain yang pertama
@@ -82,52 +76,22 @@ public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, Score {
         initializeBoard();
     }
 
-    @Override
-    protected void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new MainTicTacToe(player));
-    }
-
     private boolean isGameOver() {
-        for (int i = 0; i < 3; i++) {
-            if (board[i][0] != ' ' && board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
-                cekWin(board[i][0]);
-                return true;
-            }
-        }
-
-        // Check vertical lines
-        for (int i = 0; i < 3; i++) {
-            if (board[0][i] != ' ' && board[0][i] == board[1][i] && board[0][i] == board[2][i]) {
-                cekWin(board[0][i]);
-                return true;
-            }
-        }
-
-        // Check diagonals
-        if (board[0][0] != ' ' && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
-            cekWin(board[0][0]);
+        if (ai.evaluate(board) == 10) {
+            cekWin('O');
             return true;
         }
-        if (board[0][2] != ' ' && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
-            cekWin(board[0][2]);
-            return true;
+        
+        if (ai.evaluate(board) == -10) {
+            cekWin('X');
+            return false;
         }
 
         // Check if the board is full (draw)
-        boolean boardFull = true;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == ' ') {
-                    boardFull = false;
-                    break;
-                }
-            }
-        }
-        if (boardFull) {
+        if (ai.isBoardFull(board)) {
             cekDraw();
             return true;
         }
-
         return false;
     }
 
@@ -138,9 +102,12 @@ public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, Score {
         int currentDraw = player.getDrawTicTacToe();
 
         switch (status) {
-            case "WIN" -> player.setWinTicTacToe(currentWin + score);
-            case "LOSE" -> player.setLoseTicTacToe(currentLose + score);
-            default -> player.setDrawTicTacToe(currentDraw + score);
+            case "WIN" ->
+                player.setWinTicTacToe(currentWin + score);
+            case "LOSE" ->
+                player.setLoseTicTacToe(currentLose + score);
+            default ->
+                player.setDrawTicTacToe(currentDraw + score);
         }
     }
 
@@ -173,11 +140,11 @@ public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, Score {
         buttons[row][col].setEnabled(false);
         board[row][col] = 'O';
         playerTurn = true;
-        if (!isGameOver()) {
-        }
+        isGameOver();
     }
 
-    private void initializeBoard() {
+    @Override
+    public void initializeBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setText("");

@@ -15,28 +15,21 @@ import ViewUtama.ListGameView;
  * @author ASUS
  */
 public class ViewSuit extends BackButton implements Game {
-    private Player player;
+    private final Player player;
     /**
      * Creates new form ViewSuit
+     * @param player
      */
     public ViewSuit(Player player) {
         initComponents();
         this.player = player;
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new ListGameView(player)));
     }
     
     @Override
     public void play(String pilih){
         FrameNavigator.switchToFrame(this, new SuitGame_View(player));
-    }
-    
-    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new ListGameView(player));
     }
 
     /**

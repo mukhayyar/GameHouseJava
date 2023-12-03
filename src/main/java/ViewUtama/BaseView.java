@@ -64,15 +64,7 @@ public class BaseView extends BackButton {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-           
-    protected void addClickListener(javax.swing.JLabel button, Runnable action) {
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                action.run();
-            }
-        });
-    }
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
