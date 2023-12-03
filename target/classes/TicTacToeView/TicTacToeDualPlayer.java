@@ -7,7 +7,6 @@ package TicTacToeView;
 import Blueprint.BoardGame;
 import Blueprint.GameResultChecker;
 import Blueprint.Score;
-import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -53,8 +52,6 @@ public class TicTacToeDualPlayer extends BaseTicTacToe implements BoardGame, Gam
 
             }
         }
-        addClickListener(btnBack,
-                () -> FrameNavigator.switchToFrame(this, new MainTicTacToe(player)));
     }
 
     private void performMove(int row, int col) {

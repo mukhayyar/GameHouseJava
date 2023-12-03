@@ -7,7 +7,6 @@ package TicTacToeView;
 import Blueprint.BoardGame;
 import Blueprint.GameResultChecker;
 import Blueprint.Score;
-import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import GameHouse.TicTacToeAIClass;
 import java.awt.Font;
@@ -67,8 +66,6 @@ public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, GameResul
                 });
 
             }
-            addClickListener(btnBack,
-                () -> FrameNavigator.switchToFrame(this, new MainTicTacToe(player)));
         }
 
         playerTurn = true; // Giliran pemain yang pertama
@@ -84,7 +81,7 @@ public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, GameResul
         
         if (ai.evaluate(board) == -10) {
             cekWin('X');
-            return false;
+            return true;
         }
 
         // Check if the board is full (draw)
@@ -100,7 +97,7 @@ public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, GameResul
         int currentWin = player.getWinTicTacToe();
         int currentLose = player.getLoseTicTacToe();
         int currentDraw = player.getDrawTicTacToe();
-
+        System.out.println(status);
         switch (status) {
             case "WIN" ->
                 player.setWinTicTacToe(currentWin + score);
@@ -114,12 +111,13 @@ public class TicTacToeVsAI extends BaseTicTacToe implements BoardGame, GameResul
     @Override
     public void cekWin(char winner) {
         String message = (winner == 'X') ? "Player" : "AI";
-        message += " wins!";
+        System.out.println(message+message.equals("Player"));
         if (message.equals("Player")) {
             add("WIN", 1);
         } else {
             add("LOSE", 1);
         }
+        message += " wins!";
         JOptionPane.showMessageDialog(this, message);
         resetBoard();
     }

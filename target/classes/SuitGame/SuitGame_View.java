@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import ViewUtama.BackButton;
-import ViewUtama.ListGameView;
 
 public class SuitGame_View extends BackButton implements GameResultChecker, Score {
 
@@ -36,16 +35,8 @@ public class SuitGame_View extends BackButton implements GameResultChecker, Scor
     public SuitGame_View(Player player) {
         initComponents();
         this.player = player;
-        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBackMouseClicked(evt);
-            }
-        });
-    }
-
-    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {
-        FrameNavigator.switchToFrame(this, new ListGameView(player));
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new ViewSuit(player)));
     }
 
     @Override

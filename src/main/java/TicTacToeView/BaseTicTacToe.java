@@ -4,6 +4,7 @@
  */
 package TicTacToeView;
 
+import GameHouse.FrameNavigator;
 import GameHouse.Player;
 import ViewUtama.BackButton;
 import javax.swing.JButton;
@@ -24,6 +25,8 @@ public class BaseTicTacToe extends BackButton  {
     public BaseTicTacToe(Player player) {
         initComponents();
         this.player = player;
+        addClickListener(btnBack,
+                () -> FrameNavigator.switchToFrame(this, new MainTicTacToe(player)));
     }      
     
     protected void setTitleAndInfo(String title, String info){
