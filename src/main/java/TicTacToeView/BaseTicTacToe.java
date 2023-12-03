@@ -62,39 +62,49 @@ public class BaseTicTacToe extends BackButton  {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 126, 113));
-        getContentPane().add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, 123, 113));
-        getContentPane().add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 123, 110));
-        getContentPane().add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, 126, 113));
-        getContentPane().add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 340, 123, 113));
-        getContentPane().add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, 123, 110));
-        getContentPane().add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, 126, 113));
-        getContentPane().add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 470, 123, 113));
-        getContentPane().add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 470, 123, 110));
+        getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 140, 140, 140));
+        getContentPane().add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 140, 140));
+        getContentPane().add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 140, 140, 140));
+        getContentPane().add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 300, 140, 140));
+        getContentPane().add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 140, 140));
+        getContentPane().add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 300, 140, 140));
+        getContentPane().add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 470, 140, 140));
+        getContentPane().add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 470, 140, 140));
+        getContentPane().add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 470, 140, 140));
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Tic Tac Toe");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 280, 70));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 280, 70));
 
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Showcard Gothic", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("PLAYER 1: X");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 260, -1, -1));
 
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("INFORMASi");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, -1, -1));
 
+        lblTitle.setBackground(new java.awt.Color(255, 255, 255));
         lblTitle.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(255, 255, 255));
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("<<title>>");
-        getContentPane().add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 160, 40));
+        getContentPane().add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 160, 40));
 
+        lblInfo.setBackground(new java.awt.Color(255, 255, 255));
         lblInfo.setFont(new java.awt.Font("Showcard Gothic", 0, 18)); // NOI18N
+        lblInfo.setForeground(new java.awt.Color(255, 255, 255));
         lblInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblInfo.setText("<<INFO>>");
         getContentPane().add(lblInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 120, -1));
 
-        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/background_new.png"))); // NOI18N
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/TTTView.png"))); // NOI18N
         getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
